@@ -44,6 +44,7 @@ and a coupon for avocados that looks like this:
 ```ruby
 {:item => "AVOCADO", :num => 2, :cost => 5.0}
 
+
 ```
 
 then `apply_coupons` should return the following hash:
@@ -52,7 +53,7 @@ then `apply_coupons` should return the following hash:
 {
   "AVOCADO" => {:price => 3.0, :clearance => true, :count => 1},
   "KALE"    => {:price => 3.0, :clearance => false, :count => 1},
-  "AVOCADO W/COUPON" => {:price => 5.0, :clearance => true, :count => 1},
+  "AVOCADO W/COUPON" => {:price => 5.0, :clearance => true, :count => 1}
 }
 ```
 

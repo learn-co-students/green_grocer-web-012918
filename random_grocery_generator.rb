@@ -1,4 +1,5 @@
 require_relative 'grocer'
+require 'pry'
 
 def items
 	[
@@ -21,6 +22,8 @@ def coupons
 		{:item => "CHEESE", :num => 3, :cost => 15.00}
 	]
 end
+
+
 
 def generate_cart
 	[].tap do |cart|
