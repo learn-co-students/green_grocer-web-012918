@@ -2,12 +2,10 @@ require 'pry'
 
 def consolidate_cart(cart)
   hash = {}
-	count = 1
   cart.each do |h|
 		h.each do |k, v|
   		if hash[k]
-  			count +=1
-  			v[:count] = count
+  			v[:count] +=1
 			else
         v[:count] = 1
         hash[k] = v
@@ -19,24 +17,38 @@ end
 
 
 def apply_coupons(cart, coupons)
-  hash ={}
   coupons.each do |coupon|
     name = coupon[:item]
-        if cart[name] && (cart[name][:count] >= coupon[:num])
-          binding.pry
-          coupons_to_use = cart[name][:count] / coupon[:num]
-          new_count =  cart[name][:count] - (coupon[:num] * coupons_to_use).to_f.ceil
-          if new_count >= 0
-            cart[name][:count] = new_count
-            hash[name] = cart[name]
-          end
-          hash["#{name} W/COUPON"] = {:price => coupon[:cost], :clearance => cart[name][:clearance], :count =>  coupons_to_use}
-        end
-        if !hash[name]
-          hash[name] = cart[name]
-        end
+    if cart[name] && cart[name][:count] >= coupon[:num]
+      if cart["#{name} W/COUPON"]
+      #  binding.pry
+        cart["#{name} W/COUPON"][:count] += 1
+      else
+        cart["#{name} W/COUPON"] = {count: 1, price: coupon[:cost]}
+        cart["#{name} W/COUPON"][:clearance] = cart[name][:clearance]
       end
-  hash
+      cart[name][:count] -= coupon[:num]
+    end
+  end
+  cart
+  # hash ={}
+  # coupons.each do |coupon|
+  #   name = coupon[:item]
+  #       if cart[name] && (cart[name][:count] >= coupon[:num])
+  #         binding.pry
+  #         coupons_to_use = cart[name][:count] / coupon[:num]
+  #         new_count =  cart[name][:count] - (coupon[:num] * coupons_to_use).to_f.ceil
+  #         if new_count >= 0
+  #           cart[name][:count] = new_count
+  #           hash[name] = cart[name]
+  #         end
+  #         hash["#{name} W/COUPON"] = {:price => coupon[:cost], :clearance => cart[name][:clearance], :count =>  coupons_to_use}
+  #       end
+  #       if !hash[name]
+  #         hash[name] = cart[name]
+  #       end
+  #     end
+  # hash
 end
 
 def apply_clearance(cart)
