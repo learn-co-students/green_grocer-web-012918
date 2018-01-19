@@ -1,3 +1,4 @@
+require 'pry'
 describe "Grocer" do
   let(:items) do
     [
